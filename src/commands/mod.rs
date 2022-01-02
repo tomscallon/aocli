@@ -8,10 +8,8 @@ pub enum Opt {
   Config(config::Opt),
 }
 
-pub fn run() {
-  use Opt::*;
-
+pub fn run() -> super::Result {
   match Opt::from_args() {
-    Config(opt) => config::run(opt),
+    Opt::Config(opt) => config::run(opt),
   }
 }
