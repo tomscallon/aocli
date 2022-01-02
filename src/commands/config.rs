@@ -1,11 +1,29 @@
+use super::super::config;
+
+use std::path::PathBuf;
+
 use structopt::StructOpt;
 
 #[derive(StructOpt)]
-pub struct Opt {
-  name: String,
-  value: Option<String>,
+pub enum Opt {
+  AuthToken { value: Option<String> },
+  InputDir { value: Option<PathBuf> },
 }
 
-pub fn run(opt: Opt) {
-  println!("Ran `config {:?} {:?}`", opt.name, opt.value)
+pub fn run(opt: Opt) -> super::super::Result {
+  match opt {
+    Opt::AuthToken { value } => match value {
+      Some(auth_token) => config::set_auth_token(auth_token),
+      None => print_config("auth_token"),
+    },
+    Opt::InputDir { value } => match value {
+      Some(input_dir) => config::set_input_dir(input_dir),
+      None => print_config("input_dir"),
+    },
+  }
+}
+
+fn print_config(name: &str) -> super::super::Result {
+  println!("{}", config::get(name)?);
+  Ok(())
 }

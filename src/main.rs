@@ -1,5 +1,12 @@
-pub mod commands;
+mod commands;
+mod config;
+mod error;
+
+pub type Result<T = ()> = std::result::Result<T, error::Error>;
 
 fn main() {
-  commands::run();
+  match commands::run() {
+    Ok(_) => {}
+    Err(error) => println!("Failed to run: {:?}", error),
+  }
 }
