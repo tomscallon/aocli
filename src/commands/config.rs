@@ -6,8 +6,13 @@ use structopt::StructOpt;
 
 #[derive(StructOpt)]
 pub enum Opt {
-  AuthToken { value: Option<String> },
-  InputDir { value: Option<PathBuf> },
+  AuthToken {
+    value: Option<String>,
+  },
+  InputDir {
+    #[structopt(parse(from_os_str))]
+    value: Option<PathBuf>,
+  },
 }
 
 pub fn run(opt: Opt) -> super::super::Result {
@@ -24,6 +29,6 @@ pub fn run(opt: Opt) -> super::super::Result {
 }
 
 fn print_config(name: &str) -> super::super::Result {
-  println!("{}", config::get(name)?);
+  println!("{}", config::get_string(name)?);
   Ok(())
 }

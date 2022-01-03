@@ -22,7 +22,7 @@ impl Default for Config {
   }
 }
 
-pub fn get(name: &str) -> super::Result<String> {
+pub fn get_string(name: &str) -> super::Result<String> {
   let config: Config = confy::load(CONFY_NAME)?;
 
   match name {
@@ -40,6 +40,16 @@ pub fn get(name: &str) -> super::Result<String> {
     ),
     _ => Err(Error::UnknownConfig(name.into())),
   }
+}
+
+pub fn get_auth_token() -> super::Result<Option<String>> {
+  let config: Config = confy::load(CONFY_NAME)?;
+  return Ok(config.auth_token);
+}
+
+pub fn get_input_dir() -> super::Result<Option<PathBuf>> {
+  let config: Config = confy::load(CONFY_NAME)?;
+  return Ok(config.input_dir);
 }
 
 pub fn set_auth_token(auth_token: String) -> super::Result {
