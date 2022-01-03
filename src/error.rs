@@ -1,17 +1,16 @@
 use std::io;
 
-use confy::ConfyError;
-
 #[derive(Debug)]
 pub enum Error {
-  ConfyError(ConfyError),
+  ConfyError(confy::ConfyError),
   IoError(io::Error),
   MissingConfig(String),
+  ReqwestError(reqwest::Error),
   UnknownConfig(String),
 }
 
-impl From<ConfyError> for Error {
-  fn from(confy_error: ConfyError) -> Error {
+impl From<confy::ConfyError> for Error {
+  fn from(confy_error: confy::ConfyError) -> Error {
     Error::ConfyError(confy_error)
   }
 }
@@ -19,5 +18,11 @@ impl From<ConfyError> for Error {
 impl From<io::Error> for Error {
   fn from(io_error: io::Error) -> Error {
     Error::IoError(io_error)
+  }
+}
+
+impl From<reqwest::Error> for Error {
+  fn from(reqwest_error: reqwest::Error) -> Error {
+    Error::ReqwestError(reqwest_error)
   }
 }

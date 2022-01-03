@@ -35,7 +35,8 @@ fn fetch_input_file(auth_token: String, input_dir: PathBuf, opt: Opt) -> super::
   file_path.push(format!("{}.txt", opt.day));
 
   let mut file = prepare_file(file_path, opt.force)?;
-  file.write_all(b"Just testing!")?;
+  let input_text = super::super::http::fetch_input(auth_token, opt.year, opt.day)?;
+  file.write_all(input_text.as_bytes())?;
 
   println!("Fetching input for year {} day {}", opt.year, opt.day);
   Ok(())

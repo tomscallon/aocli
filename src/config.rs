@@ -44,12 +44,12 @@ pub fn get_string(name: &str) -> super::Result<String> {
 
 pub fn get_auth_token() -> super::Result<Option<String>> {
   let config: Config = confy::load(CONFY_NAME)?;
-  return Ok(config.auth_token);
+  Ok(config.auth_token)
 }
 
 pub fn get_input_dir() -> super::Result<Option<PathBuf>> {
   let config: Config = confy::load(CONFY_NAME)?;
-  return Ok(config.input_dir);
+  Ok(config.input_dir)
 }
 
 pub fn set_auth_token(auth_token: String) -> super::Result {

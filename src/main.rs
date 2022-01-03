@@ -1,6 +1,7 @@
 mod commands;
 mod config;
 mod error;
+mod http;
 
 pub type Result<T = ()> = std::result::Result<T, error::Error>;
 
